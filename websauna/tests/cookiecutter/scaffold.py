@@ -227,6 +227,9 @@ def app_scaffold(request, cookiecutter_config) -> str:
     # Make sure we have a recent pip version
     execute_venv_command('pip install -U pip', folder, timeout=5 * 60)
 
+    # Manually install psycopg2-binary in the new venv
+    execute_venv_command('pip install -U psycopg2-binary', folder, timeout=5 * 60)
+
     # Install cached PyPi packages
     preload_wheelhouse(folder)
 
