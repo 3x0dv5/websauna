@@ -225,10 +225,10 @@ def app_scaffold(request, cookiecutter_config) -> str:
 
     # Make sure we have a recent pip version
     execute_venv_command('pip install -U pip', folder, timeout=5 * 60)
-    raise AssertionError
+
     # Install cached PyPi packages
     preload_wheelhouse(folder)
-
+    raise AssertionError
     # Install websauna
     cmdline = 'pip install -e {folder}[notebook,utils]'.format(folder=websauna_folder)
     execute_venv_command(cmdline, folder, timeout=5 * 60)
