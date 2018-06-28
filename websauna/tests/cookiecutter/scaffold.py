@@ -220,22 +220,18 @@ def app_scaffold(request, cookiecutter_config) -> str:
    """
 
     folder = mkdtemp(prefix='websauna_test_')
-
     websauna_folder = os.getcwd()
     execute_command([PYTHON_INTERPRETER, '-m', 'venv', 'venv'], folder, timeout=30)
 
     # Make sure we have a recent pip version
     execute_venv_command('pip install -U pip', folder, timeout=5 * 60)
 
-    # Manually install psycopg2-binary in the new venv
-    execute_venv_command('pip install -U psycopg2-binary', folder, timeout=5 * 60)
-
     # Install cached PyPi packages
     preload_wheelhouse(folder)
 
     # Install websauna
     cmdline = 'pip install -e {folder}[notebook,utils]'.format(folder=websauna_folder)
-    execute_venv_command(cmdline, folder, timeout=5 * 60)
+    execute_venv_command(cmdline, folder, timeout=5)
 
     # Create Websauna app, using cookiecutter, from template cookiecutter-websauna-app
     extra_context = {
