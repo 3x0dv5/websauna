@@ -228,11 +228,11 @@ def app_scaffold(request, cookiecutter_config) -> str:
 
     # Install cached PyPi packages
     preload_wheelhouse(folder)
-    raise AssertionError
+
     # Install websauna
     cmdline = 'pip install -e {folder}[notebook,utils]'.format(folder=websauna_folder)
     execute_venv_command(cmdline, folder, timeout=5 * 60)
-
+    raise AssertionError
     # Create Websauna app, using cookiecutter, from template cookiecutter-websauna-app
     extra_context = {
         'full_name': 'Websauna Team',
