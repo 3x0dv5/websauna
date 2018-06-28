@@ -64,9 +64,8 @@ setup(
         # SQLAlchemy and database support
         "alembic",
         "colanderalchemy",
-        # Use psycopg2-binary instead of psycopg2
-        "psycopg2",
-        # "psycopg2-binary",
+        # Use psycopg2-binary instead of psycopg2,
+        "psycopg2-binary",
         "pyramid_retry",
         "pyramid_tm",
         "sqlalchemy",
