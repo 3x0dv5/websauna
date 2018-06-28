@@ -224,7 +224,7 @@ def app_scaffold(request, cookiecutter_config) -> str:
     execute_command([PYTHON_INTERPRETER, '-m', 'venv', 'venv'], folder, timeout=30)
 
     # Make sure we have a recent pip version
-    execute_venv_command('pip install -U pip', folder, timeout=5 * 60)
+    execute_venv_command('pip install -U pip', folder, timeout=5)
 
     # Install cached PyPi packages
     preload_wheelhouse(folder)
