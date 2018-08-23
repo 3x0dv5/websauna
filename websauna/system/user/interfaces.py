@@ -21,6 +21,8 @@ class IUser(Interface):
     #: How we present the user's name to the user itself. Usually. Picks one of 1) full name if set 2) username if set 3) email.
     friendly_name = zope.interface.Attribute("friendly_name")
 
+    email_address = zope.interface.Attribute("email_address")
+
 
 class IGroup(Interface):
     """User group.

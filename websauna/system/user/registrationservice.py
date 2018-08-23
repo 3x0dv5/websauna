@@ -87,10 +87,9 @@ class DefaultRegistrationService:
             'expiration_hours': int(expiration_seconds / 3600),
         }
 
-        logger.info("Sending sign up email to %s", user.email)
+        logger.info("Sending sign up email to %s", user.email_address)
 
-        # TODO: Broken abstraction, we assume user.email is a attribute
-        send_templated_mail(self.request, [user.email], "login/email/activate", context)
+        send_templated_mail(self.request, [user.email_address], "login/email/activate", context)
 
     def activate_by_email(self, activation_code: str, location: str=None) -> Response:
         """Active a user after user after the activation email.

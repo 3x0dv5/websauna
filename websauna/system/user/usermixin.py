@@ -118,6 +118,14 @@ class UserMixin:
 
         return friendly_name
 
+    @property
+    def email_address(self) -> str:
+        """The user's email address, creating an abstraction so we don't for the user to have a field email for
+        example in a custom user data model. If in the application we need to use a different name for the email field.
+        
+        """
+        return self.email
+
     def generate_username(self) -> str:
         """The default username we give for the user.
 
