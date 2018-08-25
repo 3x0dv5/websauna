@@ -1,7 +1,7 @@
 """Typing support for Websauna."""
 # flake8: noqa
 # Standard Library
-from posix import stat_result as stat_result
+# from posix import stat_result as stat_result
 from typing import *  # pragma: no cover
 
 
@@ -20,4 +20,4 @@ class DirEntry(Generic[AnyStr]):  # noqa: F405
 
     def is_symlink(self) -> bool: ...  # noqa: E704
 
-    def stat(self) -> stat_result: ...  # noqa: E704
+    def stat(self): ...  # noqa: E704
