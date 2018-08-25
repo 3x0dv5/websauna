@@ -16,6 +16,8 @@ from websauna.system.crud.sqlalchemy import Resource as AlchemyResource
 
 
 # We enforce some best practices to readable URL names of model admins. This is an arbitrary choice of the author.
+from websauna.system.user.interfaces import IGroupModel
+
 ALLOWED_TRAVERSE_ID_CHARACTERS = string.ascii_lowercase + string.digits + "-"
 
 
@@ -36,7 +38,7 @@ class ModelAdmin(CRUD):
 
     def get_model(self):
         assert self.model, "Model must be set by a subclass as a class attribute"
-        return self.model
+        return list(self.request.registry.getUtilitiesFor(IGroupModel))[0][1]
 
     #: Our resource factory
     class Resource(AlchemyResource):
