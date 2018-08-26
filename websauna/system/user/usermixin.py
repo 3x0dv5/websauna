@@ -18,6 +18,8 @@ from sqlalchemy.ext.indexable import index_property
 from sqlalchemy.orm.session import Session
 
 # Websauna
+from sqlalchemy_jsonfield import JSONField
+
 from websauna.system.model.columns import INET
 from websauna.system.model.columns import UUID
 from websauna.system.model.columns import UTCDateTime
@@ -83,7 +85,11 @@ class UserMixin:
     last_login_ip = Column(INET, nullable=True)
 
     #: Misc. user data as a bag of JSON. Do not access directly, but use JSONBProperties below
-    user_data = Column(NestedMutationDict.as_mutable(JSONB), default=DEFAULT_USER_DATA)
+    # user_data = Column(NestedMutationDict.as_mutable(JSONB), default=DEFAULT_USER_DATA)
+    user_data = Column(JSONField(
+        enforce_string=True,
+        enforce_unicode=False
+    ), default=DEFAULT_USER_DATA)
 
     #: Store when this user changed the password or authentication details. Updating this value causes the system to drop all sessions which were created before this moment. E.g. you will kick out all old sessions on a password or email change.
     last_auth_sensitive_operation_at = Column(UTCDateTime, nullable=True, default=now)
@@ -158,6 +164,8 @@ class UserMixin:
 
     def is_valid_session(self, session_created_at: datetime.datetime) -> bool:
         """Check if the current session is still valid for this user."""
+        if self.last_auth_sensitive_operation_at.tzinfo is None: # Most likely we are using Sqlite and our dates don't have tzinfo
+            session_created_at = session_created_at.replace(tzinfo=None)
         return self.last_auth_sensitive_operation_at <= session_created_at
 
     def __str__(self):
@@ -192,7 +200,11 @@ class GroupMixin:
     updated_at = Column(UTCDateTime, onupdate=now)
 
     #: Extra JSON data to be stored with this group
-    group_data = Column(NestedMutationDict.as_mutable(JSONB), default=dict)
+    # group_data = Column(NestedMutationDict.as_mutable(JSONB), default=dict)
+    group_data = Column(JSONField(
+        enforce_string=True,
+        enforce_unicode=False
+    ), default=dict)
 
 
 class SiteCreator:

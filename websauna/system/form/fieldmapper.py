@@ -25,6 +25,8 @@ from sqlalchemy.orm import RelationshipProperty
 from sqlalchemy.sql.type_api import TypeEngine
 
 # Websauna
+from sqlalchemy_jsonfield import JSONField
+
 from websauna.system.crud import Resource
 from websauna.system.form.colander import PropertyAwareSQLAlchemySchemaNode
 from websauna.system.form.colander import TypeOverridesHandling
@@ -186,7 +188,7 @@ class DefaultSQLAlchemyFieldMapper(ColumnToFieldMapper):
 
         elif isinstance(column_type, Text):
             return colander.String(), dict(widget=deform.widget.TextAreaWidget())
-        elif isinstance(column_type, JSONB):
+        elif isinstance(column_type, JSONB) or isinstance(column_type, JSONField):
             return JSONValue(), dict(widget=JSONWidget())
         elif isinstance(column_type, LargeBinary):
             # Can't edit binary

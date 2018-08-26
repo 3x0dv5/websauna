@@ -8,7 +8,7 @@ from transaction import TransactionManager
 # SQLAlchemy
 from sqlalchemy import engine_from_config
 from sqlalchemy import event
-from sqlalchemy.engine import Engine
+from sqlalchemy.engine import Engine, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 from sqlalchemy.schema import MetaData
@@ -117,6 +117,8 @@ def get_engine(settings: dict, prefix: str='sqlalchemy.') -> Engine:
 
     if 'postgres' in url:
         engine = _get_psql_engine(settings, prefix)
+    elif 'sqlite:///' in url:
+        engine = engine_from_config(settings, prefix)
     else:
         raise RuntimeError('Unknown SQLAlchemy connection URL: {url}'.format(url=url))
     return engine
